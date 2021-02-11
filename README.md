@@ -37,6 +37,7 @@ interface Tunnel1
 end
 ```
 Проверка связности:
+
 ![](https://github.com/dmitriyklimenkov/DMVPN/blob/main/ping%20R15-R18.PNG)
 
 Пинг проходит, связность есть.
