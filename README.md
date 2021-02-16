@@ -46,7 +46,7 @@ end
 
 Пинг проходит, связность есть.
 
-# 2. Настроить DMVMN Phase 2 между офисами Москва-R15 и Чокурдах-R28, Лабытнанги-R27.
+# 2. Настроить DMVMN Phase 2 между офисами Москва-R15 и Чокурдах-R28, Лабытнанги-R27 и поднять OSPF.
 
 Сеть туннеля - 10.10.20.0/24.
 Внешний IP адрес офиса Москва 194.14.123.5, адрес туннеля 10.10.20.1.
@@ -63,14 +63,20 @@ interface Tunnel2
  ip nhrp map multicast dynamic
  ip nhrp network-id 50
  ip tcp adjust-mss 1360
+ ip ospf network broadcast
+ ip ospf priority 255
  tunnel source Ethernet0/2
  tunnel mode gre multipoint
 end
+
+router ospf 10
+ network 10.10.20.0 0.0.0.255 area 0
+ network 12.12.12.0 0.0.0.255 area 0
+ network 152.95.0.0 0.0.31.255 area 0
 ```
 
 Конфигурация R28:
 ```
-!
 interface Tunnel2
  ip address 10.10.20.2 255.255.255.0
  no ip redirects
@@ -80,14 +86,19 @@ interface Tunnel2
  ip nhrp network-id 50
  ip nhrp nhs 10.10.20.1
  ip tcp adjust-mss 1360
+ ip ospf network broadcast
+ ip ospf priority 0
  tunnel source Ethernet0/0
  tunnel mode gre multipoint
 end
+
+router ospf 100
+ network 10.10.20.0 0.0.0.255 area 0
+ network 201.193.45.0 0.0.0.255 area 0
 ```
 
 Конфигурация R27:
 ```
-!
 interface Tunnel2
  ip address 10.10.20.3 255.255.255.0
  no ip redirects
@@ -97,9 +108,15 @@ interface Tunnel2
  ip nhrp network-id 50
  ip nhrp nhs 10.10.20.1
  ip tcp adjust-mss 1360
+ ip ospf network broadcast
+ ip ospf priority 0
  tunnel source Ethernet0/0
  tunnel mode gre multipoint
 end
+
+router ospf 100
+ network 10.10.20.0 0.0.0.255 area 0
+ network 27.27.27.27 0.0.0.0 area 0
 ```
 Проверим связность:
 
@@ -110,3 +127,5 @@ end
 ![](https://github.com/dmitriyklimenkov/DMVPN/blob/main/trace%20R28-R27.PNG)
 
 Видно, что сначала пакеты пошли через хаб, который настроен в Москве, при втором запуске пакеты пошли напрямую в Лабытнанги.
+
+
