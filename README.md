@@ -65,6 +65,7 @@ interface Tunnel2
  ip tcp adjust-mss 1360
  ip ospf network broadcast
  ip ospf priority 255
+ ip ospf 1 area 0
  tunnel source Ethernet0/2
  tunnel mode gre multipoint
 end
@@ -90,6 +91,7 @@ interface Tunnel2
  ip tcp adjust-mss 1360
  ip ospf network broadcast
  ip ospf priority 0
+ ip ospf 100 area 0
  tunnel source Ethernet0/0
  tunnel mode gre multipoint
 end
@@ -112,6 +114,7 @@ interface Tunnel2
  ip tcp adjust-mss 1360
  ip ospf network broadcast
  ip ospf priority 0
+ ip ospf 100 area 0
  tunnel source Ethernet0/0
  tunnel mode gre multipoint
 end
