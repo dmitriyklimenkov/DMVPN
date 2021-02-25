@@ -163,9 +163,9 @@ O        152.95.25.1/32 [110/1011] via 10.10.20.1, 00:00:04, Tunnel2
 Все маршруты прилетели.
 
 Запустим пинг с VPC7 из Москвы до VPC30 Чокурдах:
-
-VPCS> ping 201.193.45.2
 ```
+VPCS> ping 201.193.45.2
+
 84 bytes from 201.193.45.2 icmp_seq=1 ttl=57 time=3.274 ms
 84 bytes from 201.193.45.2 icmp_seq=2 ttl=57 time=4.757 ms
 84 bytes from 201.193.45.2 icmp_seq=3 ttl=57 time=3.231 ms
